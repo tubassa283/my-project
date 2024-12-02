@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./dist/output.css"> <!-- Tailwind CSSのスタイルシート -->
+    <title>Introduction</title>
+    <style>
+        /* 入力フォームの初期状態とトランジション */
+        #inputForm {
+            opacity: 0; /* 初期状態は非表示 */
+            transition: opacity 0.5s ease; /* 不透明度のトランジション */
+            display: none; /* 初期状態を非表示 */
+        }
+
+        #inputForm.show {
+            opacity: 1; /* 表示状態の不透明度 */
+            display: block; /* 表示時にブロック要素に */
+        }
+
+        /* スライド表示用コンテナの初期状態とトランジション */
+        #slideContainer {
+            display: flex; /* Flexboxを使用 */
+            flex-direction: column; /* 縦方向に配置 */
+            align-items: center; /* 中央揃え */
+            justify-content: flex-start; /* 上揃え */
+            opacity: 0; /* 初期状態は非表示 */
+            transition: opacity 0.5s ease; /* 不透明度のトランジション */
+            display: none; /* 初期状態を非表示 */
+        }
+
+        #slideContainer.visible {
+            opacity: 1; /* 表示状態の不透明度 */
+            display: flex; /* 表示時にフレックスボックス要素に */
+        }
+
+        .button-container {
+            display: flex; /* Flexboxを使用 */
+            align-items: center; /* 垂直方向で中央揃え */
+            justify-content: center; /* 水平方向で中央揃え */
+            margin-bottom: 10px; /* ボタンと次の要素の間の余白 */
+        }
+
+        #slideImage {
+            width: 600px; /* 固定幅 */
+            height: 400px; /* 固定高さ */
+            object-fit: cover; /* アスペクト比を保ちながら、領域にフィットさせる */
+            border: 5px solid #ffffff; /* 白色の5px幅の枠線 */
+            border-radius: 8px; /* 枠線を丸くする */
+        }
+
+        #slideName {
+            margin: 10px auto; /* 上下の余白と中央揃え */
+            text-align: center; /* 中央揃え */
+        }
+
+        #slideText {
+            white-space: pre-line; /* 改行を表示 */
+            max-width: 600px; /* 最大横幅を600pxに設定 */
+            width: 100%; /* 幅を100%に設定 */
+            margin: 10px auto; /* 上下の余白と中央揃え */
+            text-align: left; /* 左揃え */
+        }
+
+        /* 住所の表示用スタイル */
+        #slideAddress {
+            text-align: center; /* 中央揃え */
+            margin-top: 10px; /* 上部に余白を追加 */
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- メイン画像 -->
+    <div class="image-container mb-6 animate-fadeIn">
+        <img src="photo/home3.png" alt="サンプル画像" class="mx-auto" width="1000" height="600">
+    </div>
+
+    <!-- 説明文のコンテナ -->
+    <div class="container mx-auto bg-white rounded-lg shadow-lg p-2 opacity-0 animate-fadeIn flex flex-col items-center w-3/5">
+        <h1 class="text-3xl font-bold ml-25 mb-4">~埼玉でどこへ行けば良いかわからないとき~</h1>
+        <p class="mb-2 text-center">「埼玉って何があるの....」</p>
+        <p class="mb-2 text-center">「この辺りで面白いスポットはないかな？」</p>
+        <p class="mb-2 text-center">埼玉の、どこに行く？と迷った時の行き先を決めるお手伝いをします。</p>
+        <p class="mb-4 text-center">どこに行こうか決まらず悩む時間を無くし、楽しい時間に変えてみませんか？</p>
+    </div>
+
+    <!-- 行き先を探すボタン -->
+    <div class="text-center mt-6 mb-4">
+        <button id="blue-button" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">行き先を探す</button>
+    </div>
+
+    <!-- エラーメッセージ -->
+    <div class="exception text-center mb-4">
+        <p>※応答がない場合、お手数ですが<br>再度読み込みをお願いいたします。</p>
+    </div>
+
+    <!-- 入力フォーム -->
+    <div id="inputForm" class="mb-4 hidden">
+        <form class="flex flex-col items-center">
+            <select id="destination1" class="mb-2 p-2 border rounded">
+                <option value="" disabled selected>どこに行きたい?</option>
+                <option value="北部">北部</option>
+                <option value="東部">東部</option>
+                <option value="西部">西部</option>
+                <option value="南部">南部</option>
+            </select>
+
+            <div id="destination3">
+                <button type="button" id="search-button" class="bg-green-500 text-white px-4 py-2 mt-10 rounded hover:bg-green-600">検索</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- スライド表示用の要素 -->
+    <div id="slideContainer" class="hidden">
+        <div class="button-container">
+            <button id="prev-button" class="bg-gray-300 text-black px-2 py-1 rounded hover:bg-gray-400">&lt;</button>
+            <img id="slideImage" src="" alt="スライド画像">
+            <button id="next-button" class="bg-gray-300 text-black px-2 py-1 rounded hover:bg-gray-400">&gt;</button>
+        </div>
+        <p id="slideName" class="font-bold"></p> <!-- スライド名 -->
+        <p id="slideText"></p> <!-- 画像に対応する説明文 -->
+        <p id="slideAddress"></p> <!-- スライド住所 -->
+    </div>
+
+    <!-- 外部JavaScriptファイルを読み込む -->
+    <script src="search.js"></script>
+
+    <!-- フッター -->
+    <footer class="bg-gray-200 p-4 text-center">
+        <div class="foot">
+            <p><small>&copy; 2024 Tsubasa Product</small></p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
