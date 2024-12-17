@@ -9,11 +9,7 @@ const PORT = process.env.PORT || 3000; // 環境変数からポートを取得�
 
 // PostgreSQL接続設定
 const pool = new Pool({
-    user: '', // PostgreSQLのユーザー名
-    host: '', // PostgreSQLのホスト
-    database: '', // データベース名
-    password: '', // パスワード
-    port: '', // PostgreSQLのポート
+    // PostgreSQLについての記載をする(仮)
 });
 
 // ミドルウェア設定
