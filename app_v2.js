@@ -42,7 +42,7 @@ app.get('/slides', async (req, res) => {
     const region = req.query.region; // クエリパラメータから地域を取得
     try {
         // データベースから指定された地域のスライドデータを取得
-        const result = await pool.query('SELECT * FROM saitama WHERE region = $1', [region]);
+        const result = await pool.query('SELECT * FROM TBL名 WHERE region = $1', [region]);
         res.json(result.rows); // スライド情報をJSON形式で返す
     } catch (err) {
         console.error('Error fetching slides:', err);
