@@ -16,3 +16,7 @@ PostgreSQLに保存されたデータをバックエンドから動的に取得�
 フロントエンド: HTML, CSS (TailwindCSS), JavaScript (Vanilla JS)
 データベース: PostgreSQL
 デプロイ: GitHub (本番ではRailwayを予定)
+
+③ モジュールについて
+一部セキュリティの都合上、モジュールの記載を簡略化している部分があり、
+外部依存や機密情報を公開せずに説明している。
